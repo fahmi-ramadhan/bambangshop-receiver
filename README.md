@@ -74,16 +74,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
   - ✅ Commit: `Implement list_all_as_string function in Notification repository.`
   - ✅ Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 - **STAGE 3: Implement services and controllers**
-  - [ ] Commit: `Create Notification service struct skeleton.`
-  - [ ] Commit: `Implement subscribe function in Notification service.`
-  - [ ] Commit: `Implement subscribe function in Notification controller.`
-  - [ ] Commit: `Implement unsubscribe function in Notification service.`
-  - [ ] Commit: `Implement unsubscribe function in Notification controller.`
-  - [ ] Commit: `Implement receive_notification function in Notification service.`
-  - [ ] Commit: `Implement receive function in Notification controller.`
-  - [ ] Commit: `Implement list_messages function in Notification service.`
-  - [ ] Commit: `Implement list function in Notification controller.`
-  - [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+  - ✅ Commit: `Create Notification service struct skeleton.`
+  - ✅ Commit: `Implement subscribe function in Notification service.`
+  - ✅ Commit: `Implement subscribe function in Notification controller.`
+  - ✅ Commit: `Implement unsubscribe function in Notification service.`
+  - ✅ Commit: `Implement unsubscribe function in Notification controller.`
+  - ✅ Commit: `Implement receive_notification function in Notification service.`
+  - ✅ Commit: `Implement receive function in Notification controller.`
+  - ✅ Commit: `Implement list_messages function in Notification service.`
+  - ✅ Commit: `Implement list function in Notification controller.`
+  - ✅ Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 
@@ -98,3 +98,9 @@ This is the place for you to write reflections:
 2. Dalam tutorial ini, kita `lazy_static` untuk mendefinisikan `Vec` dan `DashMap` sebagai variabel _static_. Berbeda dengan Java yang memungkinkan kita untuk mengubah isi variabel _static_ melalui fungsi _static_, Rust tidak mengizinkan kita melakukan hal tersebut karena Rust memiliki _memory safety model_ yang ketat yang disebut "_ownership_". Dalam model ini, hanya ada satu pemilik data pada satu waktu dan data tersebut tidak bisa diubah saat sedang dipinjam. Variabel _static_ di Rust bersifat global dan bisa diakses dari banyak _thread_ sehingga jika Rust mengizinkan mutasi langsung pada variable _static_ maka akan berpotensi untuk terjadi _race condition_. Oleh karena itu, Rust membutuhkan penggunaan `Mutex` atau `RwLock` untuk mengubah variabel _static_ yang memastikan bahwa hanya ada satu _thread_ yang bisa mengubah data pada satu waktu.
 
 #### Reflection Subscriber-2
+
+1. Ya, saya mengeksplor _file_ `lib.rs`. `lib.rs` merupakan _file_ yang berisi definisi struktur dan fungsi-fungsi penting dalam aplikasi ini, misalnya pengaturan koneksi HTTP melalui `reqwest`, pengelolaan konfigurasi aplikasi dengan bantuan `dotenv` dan `rocket::figment`, serta penanganan _error response_ dengan struktur `ErrorResponse` dan fungsi `compose_error_response`. Selain itu, _file_ ini juga menginisiasi _singleton_ untuk klien HTTP (`REQWEST_CLIENT`) dan konfigurasi aplikasi (`APP_CONFIG`) yang dapat diakses secara global.
+
+2. _Observer pattern_ memudahkan penambahan lebih banyak _subscriber_ karena setiap _subscriber_ hanya perlu _subscribe_ ke _publisher_ dan kemudian akan menerima notifikasi saat ada perubahan. Hal ini memungkinkan penambahan dan penghapusan _subscriber_ secara dinamis tanpa perlu mengubah kode _publisher_. Namun, jika kita menjalankan lebih dari satu _instance_ dari aplikasi utama, kita perlu memastikan bahwa setiap _instance_ memiliki akses ke _database_ yang sama dan dapat berkomunikasi dengan semua _subscriber_. Hal ini mungkin memerlukan penyesuaian tambahan pada kode dan konfigurasi tergantung pada bagaimana aplikasi kita dirancang. Dalam kasus BambangShop, data _subscriber_ disimpan dalam `DashMap` yang berada di memori lokal aplikasi sehingga setiap _instance_ aplikasi utama akan memiliki `DashMap` `Subscriber`-nya sendiri dan tidak akan berbagi data dengan _instance_ lain. Selain itu, kita juga perlu memastikan bahwa notifikasi dikirim secara konsisten oleh semua _instance_ karena dalam kasus ini setiap _instance_ akan mencoba mengirim notifikasi ke semua _subscriber_ setiap kali ada perubahan pada `Product` sehingga menyebabkan suatu _subscriber_ bisa menerima notifikasi yang sama lebih dari satu kali.
+
+3. Ya, menurut saya fitur-fitur tersebut akan sangat berguna untuk proyek saya. Membuat tes akan memungkinkan saya untuk memastikan bahwa kode saya berfungsi seperti yang diharapkan. Sementara itu, meningkatkan dokumentasi pada koleksi Postman saya akan memudahkan rekan kerja saya untuk memahami dan menggunakan API yang telah saya buat.
